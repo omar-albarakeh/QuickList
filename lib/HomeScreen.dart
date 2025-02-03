@@ -9,6 +9,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _nameController = TextEditingController();
+   List<Map<String ,dynamic>> _nameList =[];
 
   @override
   void dispose() {
@@ -42,6 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Future<String> _AddName(String name){
+
   }
 
  Widget _showDialog(){
