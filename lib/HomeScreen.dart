@@ -12,13 +12,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle:true,
-              title: Text("Quick List"),
+        centerTitle: true,
+        title: Text("Quick List"),
         backgroundColor: Colors.orange,
       ),
-        body: FloatingActionButton(
-            onPressed: ADDPeople();
+      body: Positioned(
+        child: FloatingActionButton(
+          onPressed: () {},
         ),
-    );}
+      ),
+    );
+  }
 }
-
