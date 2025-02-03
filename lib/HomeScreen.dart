@@ -8,6 +8,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,18 +50,27 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) {
         return AlertDialog(
           title: const Text("Add Name"),
-          content: const TextField(
-            decoration: InputDecoration(
+          content: TextField(
+            controller: _nameController,
+            decoration: const InputDecoration(
               labelText: "Enter user name",
             ),
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                _nameController.clear();
+                Navigator.pop(context);
+              },
               child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
+                String enteredName = _nameController.text.trim();
+                if (enteredName.isNotEmpty) {
+                  print("User Entered: $enteredName");
+                }
+                _nameController.clear();
                 Navigator.pop(context);
               },
               child: const Text("Add"),
