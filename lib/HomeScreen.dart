@@ -45,8 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<String> _AddName(String name){
-
+  void _AddName(String name){
+    if(name.isNotEmpty && !_nameList.any((item) => item['name'] == name )){
+      setState(() {
+        _nameList.add({'name' :name , 'count' :0});
+      });
+    }
   }
 
  Widget _showDialog(){
