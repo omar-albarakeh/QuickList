@@ -49,8 +49,13 @@ class _HomeScreenState extends State<HomeScreen> {
          context: context,
          builder:(context){
            return AlertDialog(
-             title: Text("Enter user name "),
-             content: ,
+             title: Text("Add Name "),
+             content: TextField(
+               decoration: InputDecoration(
+                 labelText: "Enter User Name"
+               ),
+               controller: _nameController,
+             ) ,
              actions: [
                
              ],
