@@ -57,7 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
                controller: _nameController,
              ) ,
              actions: [
-               
+               TextButton(
+                   onPressed: (){
+                     _nameController.clear();
+                     Navigator.pop(context);
+                   },
+                   child: Text("cancel")
+               ),
              ],
            )
          }
