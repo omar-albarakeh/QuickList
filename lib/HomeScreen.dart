@@ -16,6 +16,9 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text("Quick List"),
         backgroundColor: Colors.orange,
       ),
-        body :Text("hello world"),
+        body: FloatingActionButton(
+            onPressed: ADDPeople();
+        ),
     );}
 }
+
