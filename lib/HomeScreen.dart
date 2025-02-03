@@ -44,40 +44,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Add Name"),
-          content: TextField(
-            controller: _nameController,
-            decoration: const InputDecoration(
-              labelText: "Enter user name",
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                _nameController.clear();
-                Navigator.pop(context);
-              },
-              child: const Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () {
-                String enteredName = _nameController.text.trim();
-                if (enteredName.isNotEmpty) {
-                  print("User Entered: $enteredName");
-                }
-                _nameController.clear();
-                Navigator.pop(context);
-              },
-              child: const Text("Add"),
-            ),
-          ],
-        );
-      },
+ Widget _showDialog(){
+     showDialog(
+         context: context,
+         builder:(context){
+           return AlertDialog(
+             title: Text("Enter user name "),
+             content: ,
+             actions: [
+               
+             ],
+           )
+         }
     );
-  }
+ }
 }
