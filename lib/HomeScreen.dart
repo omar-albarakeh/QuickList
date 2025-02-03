@@ -64,6 +64,17 @@ class _HomeScreenState extends State<HomeScreen> {
                    },
                    child: Text("cancel")
                ),
+               TextButton(
+                   onPressed: (){
+                     String name=_nameController.text.trim();
+                     if( name.isNotEmpty)
+                       {
+                         _AddName(name);
+                       }
+                     Navigator.pop(context);
+                   },
+                   child: Text("Add")
+               ),
              ],
            )
          }
