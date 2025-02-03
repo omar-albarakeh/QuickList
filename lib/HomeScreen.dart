@@ -13,13 +13,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Quick List"),
+        title: const Text("Quick List"),
         backgroundColor: Colors.orange,
       ),
-      body: Positioned(
-        child: FloatingActionButton(
-          onPressed: () {},
-        ),
+      body: Stack(
+        children: [
+          Positioned(
+            bottom: 30,
+            right: 20,
+            child: FloatingActionButton(
+              onPressed: () {},
+              child: const Icon(Icons.add),
+            ),
+          ),
+        ],
       ),
     );
   }
