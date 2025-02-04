@@ -40,7 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   return ListTile(
                     leading: Text("${index + 1} ."),
                     title: Text(" ${_nameList[index]['name']}"),
-                    trailing: Text("Count: ${_nameList[index]['count']}"),
+                    trailing: Row(
+                      children: [
+                        Text("Count: ${_nameList[index]['count']}"),
+                      ],
+                    ),
                   );
                 },
               ),
