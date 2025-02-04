@@ -29,7 +29,16 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.orange,
       ),
       body: SafeArea(
-        child: ,
+        child: ListView.builder(
+          padding: const EdgeInsets.all(16.0),
+          itemCount: _nameList.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(_nameList[index]['name']),
+              trailing: Text("Count: ${_nameList[index]['count']}"),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showDialog(),
