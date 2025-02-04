@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(" ${_nameList[index]['name']}"),
                     subtitle: Text("Count: ${_nameList[index]['count']}"),
                     trailing: SizedBox(
-                      width: 50,
+                      width: 130,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -57,7 +57,43 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               alignment: Alignment.center,
                               child: const Icon(
-                                Icons.add,
+                                Icons.keyboard_double_arrow_up_sharp,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          GestureDetector(
+                            onTap: () => _DownGradeCount(index),
+                            child: Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                              child: const Icon(
+                                Icons.keyboard_double_arrow_down_sharp,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          GestureDetector(
+                            onTap: () => _DownGradeCount(index),
+                            child: Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: Colors.orange,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                              child: const Icon(
+                                Icons.refresh,
                                 color: Colors.white,
                                 size: 30,
                               ),
@@ -72,8 +108,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.orange,
         onPressed: () => _showDialog(),
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add ,color: Colors.white,),
       ),
     );
   }
