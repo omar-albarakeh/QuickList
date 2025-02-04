@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: _nameList.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: Text("${index + 1} _"),
+                    leading: Text("${index + 1} ."),
                     title: Text(" ${_nameList[index]['name']}"),
                     subtitle: Text("Count: ${_nameList[index]['count']}"),
                     trailing: SizedBox(
@@ -46,12 +46,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          IconButton(
-                            onPressed: () => _updateCount(index),
-                            icon: const Icon(Icons.add),
+                          GestureDetector(
+                            onTap: () => _updateCount(index), 
+                            child: Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ),
                           ),
                         ],
                       ),
+
                     ),
                   );
                 },
