@@ -155,16 +155,11 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.orange[50],
           title: const Text(
             "Add Name",
-            style: TextStyle(color: Colors.orange),
           ),
           content: TextField(
             decoration: const InputDecoration(
               labelText: "Enter User Name",
               labelStyle: TextStyle(color: Colors.orange),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Colors.orange),
-              ),
             ),
             controller: _nameController,
           ),
