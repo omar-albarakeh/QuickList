@@ -34,11 +34,13 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: _nameList.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(_nameList[index]['name']),
+              leading: Text("${index + 1}"),
+              title: Text(" ${_nameList[index]['name']}"),
               trailing: Text("Count: ${_nameList[index]['count']}"),
             );
           },
         ),
+
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showDialog(),
