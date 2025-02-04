@@ -38,12 +38,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: _nameList.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: Text("${index + 1} ."),
+                    leading: Text("${index + 1} _"),
                     title: Text(" ${_nameList[index]['name']}"),
-                    trailing: Row(
-                      children: [
-                        Text("Count: ${_nameList[index]['count']}"),
-                      ],
+                    subtitle: Text("Count: ${_nameList[index]['count']}"),
+                    trailing: SizedBox(
+                      width: 50,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () => _updateCount(index),
+                            icon: const Icon(Icons.add),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -66,6 +74,15 @@ class _HomeScreenState extends State<HomeScreen> {
         const SnackBar(content: Text("Name already added")),
       );
     }
+  }
+
+  void _updateCount(int index) {
+    setState(() {
+      _nameList[index]['count'] += 1;
+      if (_nameList[index]['count'] < 0) {
+        _nameList[index]['count'] = 0;
+      }
+    });
   }
 
   Future<void> _showDialog() async {
