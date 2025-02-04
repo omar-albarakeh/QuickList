@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           GestureDetector(
-                            onTap: () => _updateCount(index), 
+                            onTap: () => _updateCount(index),
                             child: Container(
                               width: 36,
                               height: 36,
@@ -97,6 +97,15 @@ class _HomeScreenState extends State<HomeScreen> {
         _nameList[index]['count'] = 0;
       }
     });
+  }
+
+  void _DownGradeCount(index){
+    setState(() {
+      _nameList[index]['count'] -= 1;
+    });
+    if (_nameList[index]['count'] < 0) {
+      _nameList[index]['count'] = 0;
+    }
   }
 
   Future<void> _showDialog() async {
