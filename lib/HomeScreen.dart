@@ -9,7 +9,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _nameController = TextEditingController();
-   List<Map<String ,dynamic>> _nameList =[];
+  List<Map<String, dynamic>> _nameList = [];
 
   @override
   void dispose() {
@@ -29,64 +29,59 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.orange,
       ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 30,
-              right: 20,
-              child: FloatingActionButton(
-                onPressed: () => _showDialog(),
-                child: const Icon(Icons.add),
-              ),
-            ),
-          ],
-        ),
+        child: ,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showDialog(),
+        child: const Icon(Icons.add),
       ),
     );
   }
 
-  void _AddName(String name){
-    if(name.isNotEmpty && !_nameList.any((item) => item['name'] == name )){
+  void _AddName(String name) {
+    if (name.isNotEmpty && !_nameList.any((item) => item['name'] == name)) {
       setState(() {
-        _nameList.add({'name' :name , 'count' :0});
+        _nameList.add({'name': name, 'count': 0});
       });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Name already added")),
+      );
     }
   }
 
- Widget _showDialog(){
-     showDialog(
-         context: context,
-         builder:(context){
-           return AlertDialog(
-             title: Text("Add Name "),
-             content: TextField(
-               decoration: InputDecoration(
-                 labelText: "Enter User Name"
-               ),
-               controller: _nameController,
-             ) ,
-             actions: [
-               TextButton(
-                   onPressed: (){
-                     _nameController.clear();
-                     Navigator.pop(context);
-                   },
-                   child: Text("cancel")
-               ),
-               TextButton(
-                   onPressed: (){
-                     String name=_nameController.text.trim();
-                     if( name.isNotEmpty)
-                       {
-                         _AddName(name);
-                       }
-                     Navigator.pop(context);
-                   },
-                   child: Text("Add")
-               ),
-             ],
-           )
-         }
+  Future<void> _showDialog() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Add Name"),
+          content: TextField(
+            decoration: const InputDecoration(labelText: "Enter User Name"),
+            controller: _nameController,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                _nameController.clear();
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                String name = _nameController.text;
+                if (name.isNotEmpty) {
+                  _AddName(name);
+                }
+                _nameController.clear();
+                Navigator.pop(context);
+              },
+              child: const Text("Add"),
+            ),
+          ],
+        );
+      },
     );
- }
+  }
 }
