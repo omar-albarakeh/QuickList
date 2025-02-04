@@ -29,18 +29,21 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.orange,
       ),
       body: SafeArea(
-        child: ListView.builder(
-          padding: const EdgeInsets.all(16.0),
-          itemCount: _nameList.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: Text("${index + 1}"),
-              title: Text(" ${_nameList[index]['name']}"),
-              trailing: Text("Count: ${_nameList[index]['count']}"),
-            );
-          },
-        ),
-
+        child: _nameList.isEmpty
+            ? Center(
+                child: Text("No Names Added"),
+              )
+            : ListView.builder(
+                padding: const EdgeInsets.all(16.0),
+                itemCount: _nameList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Text("${index + 1} ."),
+                    title: Text(" ${_nameList[index]['name']}"),
+                    trailing: Text("Count: ${_nameList[index]['count']}"),
+                  );
+                },
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showDialog(),
