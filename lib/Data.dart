@@ -6,7 +6,7 @@ class Data {
   Future<void> initialize() async {
     nameList = await Storage.LoadData();
   }
-  
+
   void AddName(String name) {
     if (name.isNotEmpty && !nameList.any((item) => item['name'] == name)) {
       nameList.add({"name": name, "Count": 0});

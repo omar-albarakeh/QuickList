@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:quicklist/Data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,30 +13,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _searchController = TextEditingController();
-  List<Map<String, dynamic>> _nameList = [];
   List<Map<String, dynamic>> _filteredNameList = [];
-  late SharedPreferences _prefs;
   bool _isSearching = false;
 
-  void _saveData() async {
-    await _prefs.setString('nameList', jsonEncode(_nameList));
-  }
-
-  void _loadData() async {
-    _prefs = await SharedPreferences.getInstance();
-    String? storedData = _prefs.getString("nameList");
-    if (storedData != null) {
-      setState(() {
-        _nameList = List<Map<String, dynamic>>.from(json.decode(storedData));
-        _filteredNameList = List.from(_nameList);
-      });
-    }
-  }
-
+  final Data _datamanager =Data();
   @override
   void initState() {
     super.initState();
-    _loadData();
     _searchController.addListener(_filterNames);
   }
 
