@@ -10,13 +10,23 @@ class Data {
     onUpdate?.call();
   }
 
-  void AddName(String name) {
-    if (name.isNotEmpty && !nameList.any((item) => item['name'] == name)) {
-      nameList.add({"name": name, "count": 0});
-      Storage.saveData(nameList);
+  void AddName(String name) async {
+    name = name.trim();
+    if (name.isEmpty) return;
+
+    bool nameExists = nameList.any((item) => item['name'].toString().toLowerCase() == name.toLowerCase());
+    if (nameExists) return;
+
+    nameList.add({"name": name, "count": 0});
+
+    try {
+      await Storage.saveData(nameList);
       onUpdate?.call();
+    } catch (e) {
+      print("Error saving data: $e");
     }
   }
+
 
   void AddCounter(int index) {
     if (index >= 0 && index < nameList.length) {
