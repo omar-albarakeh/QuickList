@@ -20,5 +20,9 @@ void AddCounter(index){
     Storage.saveData(nameList);
 }
   //SubtractCounter
+void SubtractCounter(index){
+    nameList[index]['count'] -=1;
+    Storage.saveData(nameList);
+}
   //RestsetCounter
 }
