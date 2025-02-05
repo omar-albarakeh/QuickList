@@ -10,22 +10,41 @@ class Data {
     onUpdate?.call();
   }
 
-  void AddName(String name) async {
+  void AddName(String name, BuildContext context) async {
     name = name.trim();
-    if (name.isEmpty) return;
+    if (name.isEmpty) {
+      _showMessage(context, "Name cannot be empty!", Colors.red);
+      return;
+    }
 
     bool nameExists = nameList.any((item) => item['name'].toString().toLowerCase() == name.toLowerCase());
-    if (nameExists) return;
+    if (nameExists) {
+      _showMessage(context, "This name already exists!", Colors.orange);
+      return;
+    }
 
     nameList.add({"name": name, "count": 0});
 
     try {
       await Storage.saveData(nameList);
       onUpdate?.call();
+      _showMessage(context, "Name added successfully!", Colors.green);
     } catch (e) {
+      _showMessage(context, "Error saving data!", Colors.red);
       print("Error saving data: $e");
     }
   }
+
+  void _showMessage(BuildContext context, String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message, style: TextStyle(color: Colors.white)),
+        backgroundColor: color,
+        duration: Duration(seconds: 4),
+      ),
+    );
+  }
+
 
 
   void AddCounter(int index) {

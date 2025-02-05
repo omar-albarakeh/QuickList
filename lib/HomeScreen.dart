@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 String name = _nameController.text.trim();
                 if (name.isNotEmpty) {
-                  _datamanager.AddName(name);
+                  _datamanager.AddName(name,context);
                 }
                 _nameController.clear();
                 Navigator.pop(context);
