@@ -148,6 +148,7 @@ void _loadData() async{
       setState(() {
         _nameList.add({'name': name, 'count': 0});
       });
+      _saveData();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Name already added")),
@@ -155,13 +156,14 @@ void _loadData() async{
     }
   }
 
-  void _updateCount(int index) {
+  void _updateCount(index) {
     setState(() {
       _nameList[index]['count'] += 1;
       if (_nameList[index]['count'] < 0) {
         _nameList[index]['count'] = 0;
       }
     });
+    _saveData();
   }
 
   void _DownGradeCount(index) {
@@ -171,6 +173,7 @@ void _loadData() async{
     if (_nameList[index]['count'] < 0) {
       _nameList[index]['count'] = 0;
     }
+    _saveData();
   }
 
   Future<void> _showDialog() async {
