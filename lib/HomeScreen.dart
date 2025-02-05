@@ -25,94 +25,98 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text(
           "Quick List",
           style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 35),
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32),
         ),
-        backgroundColor: Colors.orange,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.white, Colors.black],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
       ),
-      body: SafeArea(
-        child: _nameList.isEmpty
-            ? Center(
-          child: Text("No Names Added",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-        )
-            : ListView.builder(
-          padding: const EdgeInsets.all(16.0),
-          itemCount: _nameList.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: Text("${index + 1} ."),
-              title: Text(" ${_nameList[index]['name']}"),
-              subtitle: Text("Count: ${_nameList[index]['count']}"),
-              trailing: SizedBox(
-                width: 130,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GestureDetector(
-                      onTap: () => _updateCount(index),
-                      child: Container(
-                        width: 36,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          shape: BoxShape.circle,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.black],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: SafeArea(
+          child: _nameList.isEmpty
+              ? const Center(
+                  child: Text(
+                    "No Names Added",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: _nameList.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.orangeAccent,
+                          child: Text("${index + 1}",
+                              style: const TextStyle(color: Colors.white)),
                         ),
-                        alignment: Alignment.center,
-                        child: const Icon(
-                          Icons.keyboard_double_arrow_up_sharp,
-                          color: Colors.white,
-                          size: 30,
+                        title: Text(
+                          "${_nameList[index]['name']}",
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
+                        subtitle: Text("Count: ${_nameList[index]['count']}",
+                            style: const TextStyle(fontSize: 16)),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _buildIconButton(Icons.keyboard_arrow_up,
+                                Colors.green, () => _updateCount(index)),
+                            const SizedBox(width: 8),
+                            _buildIconButton(Icons.keyboard_arrow_down,
+                                Colors.red, () => _downGradeCount(index)),
+                            const SizedBox(width: 8),
+                            _buildIconButton(Icons.refresh, Colors.blue,
+                                () => _resetCount(index)),
+                          ],
                         ),
                       ),
-                    ),
-                    SizedBox(width: 10,),
-                    GestureDetector(
-                      onTap: () => _DownGradeCount(index),
-                      child: Container(
-                        width: 36,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                        ),
-                        alignment: Alignment.center,
-                        child: const Icon(
-                          Icons.keyboard_double_arrow_down_sharp,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10,),
-                    GestureDetector(
-                      onTap: () => _DownGradeCount(index),
-                      child: Container(
-                        width: 36,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          color: Colors.orange,
-                          shape: BoxShape.circle,
-                        ),
-                        alignment: Alignment.center,
-                        child: const Icon(
-                          Icons.refresh,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
-
-              ),
-            );
-          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.deepOrange,
         onPressed: () => _showDialog(),
-        child: const Icon(Icons.add, color: Colors.white,),
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _buildIconButton(IconData icon, Color color, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(color: color.withOpacity(0.5), blurRadius: 5),
+          ],
+        ),
+        alignment: Alignment.center,
+        child: Icon(icon, color: Colors.white, size: 24),
       ),
     );
   }
@@ -132,19 +136,20 @@ class _HomeScreenState extends State<HomeScreen> {
   void _updateCount(int index) {
     setState(() {
       _nameList[index]['count'] += 1;
-      if (_nameList[index]['count'] < 0) {
-        _nameList[index]['count'] = 0;
-      }
     });
   }
 
-  void _DownGradeCount(index) {
+  void _downGradeCount(int index) {
     setState(() {
-      _nameList[index]['count'] -= 1;
+      _nameList[index]['count'] =
+          (_nameList[index]['count'] > 0) ? _nameList[index]['count'] - 1 : 0;
     });
-    if (_nameList[index]['count'] < 0) {
+  }
+
+  void _resetCount(int index) {
+    setState(() {
       _nameList[index]['count'] = 0;
-    }
+    });
   }
 
   Future<void> _showDialog() async {
@@ -153,9 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.orange[50],
-          title: const Text(
-            "Add Name",
-          ),
+          title: const Text("Add Name"),
           content: TextField(
             decoration: const InputDecoration(
               labelText: "Enter User Name",
@@ -169,8 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 _nameController.clear();
                 Navigator.pop(context);
               },
-              child: const Text(
-                  "Cancel", style: TextStyle(color: Colors.orange)),
+              child:
+                  const Text("Cancel", style: TextStyle(color: Colors.orange)),
             ),
             TextButton(
               onPressed: () {
