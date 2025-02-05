@@ -18,6 +18,16 @@ class _HomeScreenState extends State<HomeScreen> {
 void _saveData()async{
   await  _prefs.setString( 'nameList', jsonEncode(_nameList));
 }
+
+void _loadData() async{
+  _prefs =await SharedPreferences.getInstance();
+  String? storedData = _prefs.getString("nameList");
+  if(storedData != null){
+    setState(() {
+      _nameList = List<Map<String, dynamic>>.from(json.decode(storedData));
+    });
+  }
+}
   @override
   void dispose() {
     _nameController.dispose();
