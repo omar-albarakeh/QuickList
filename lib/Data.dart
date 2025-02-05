@@ -58,6 +58,9 @@ class Data {
   void SubtractCounter(int index) {
     if (index >= 0 && index < nameList.length) {
       nameList[index]['count'] -= 1;
+      if(nameList[index]['count'] < 0){
+        RestCounter(index);
+      }
       Storage.saveData(nameList);
       onUpdate?.call();
     }
