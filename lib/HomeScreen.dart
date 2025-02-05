@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,12 +63,12 @@ void _loadData() async{
           itemBuilder: (context, index) {
             return ListTile(
               leading: CircleAvatar(
-               radius:30,
+               radius:15,
                 child:
-               Text("${index + 1} ."),
+               Text("${index + 1} "),
               ),
-              title: Text(" ${_nameList[index]['name']}"),
-              subtitle: Text("Count: ${_nameList[index]['count']}"),
+              title: Text(" ${_nameList[index]['name']}",style: TextStyle(fontSize: 20),),
+              subtitle: Text("Count: ${_nameList[index]['count']}",style: TextStyle(fontSize: 15),),
               trailing: SizedBox(
                 width: 130,
                 child: Row(
