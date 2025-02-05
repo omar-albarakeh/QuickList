@@ -13,6 +13,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _nameController = TextEditingController();
   List<Map<String, dynamic>> _nameList = [];
   late SharedPreferences _prefs;
+  List<Map<String, dynamic>> _filteredNameList = [];
+  bool _isSearching = false;
+
 
 void _saveData()async{
   await  _prefs.setString( 'nameList', jsonEncode(_nameList));
@@ -24,6 +27,7 @@ void _loadData() async{
   if(storedData != null){
     setState(() {
       _nameList = List<Map<String, dynamic>>.from(json.decode(storedData));
+      _filteredNameList = List.from(_nameList);
     });
   }
 }
@@ -39,6 +43,9 @@ void _loadData() async{
     super.dispose();
   }
 
+  void _Namesearch(){
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +57,11 @@ void _loadData() async{
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 35),
         ),
         backgroundColor: Colors.orange,
+        actions: [
+          IconButton(
+              onPressed: (){},
+              icon: Icon(Icons.search,color: Colors.white,size: 30,))
+        ],
       ),
       body: SafeArea(
         child: _nameList.isEmpty
