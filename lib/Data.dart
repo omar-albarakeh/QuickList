@@ -15,6 +15,10 @@ void AddName(String name){
     }
 }
   //addCounter
+void AddCounter(index){
+    nameList[index]['count'] +=1;
+    Storage.saveData(nameList);
+}
   //SubtractCounter
   //RestsetCounter
 }
