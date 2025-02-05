@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:quicklist/Data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,10 +15,20 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isSearching = false;
 
   final Data _datamanager =Data();
+
+
   @override
   void initState() {
     super.initState();
+    _initialize();
     _searchController.addListener(_filterNames);
+  }
+
+  Future<void> _initialize() async {
+    await _datamanager.initialize();
+    setState(() {
+      _filteredNameList = List.from(_datamanager.nameList);
+    });
   }
 
   @override
@@ -33,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _filterNames() {
     String query = _searchController.text.toLowerCase();
     setState(() {
-      _filteredNameList = _nameList
+      _filteredNameList = _datamanager.nameList
           .where((item) => item['name'].toLowerCase().contains(query))
           .toList();
     });
@@ -44,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _isSearching = !_isSearching;
       if (!_isSearching) {
         _searchController.clear();
-        _filteredNameList = List.from(_nameList);
+        _filteredNameList = List.from(_datamanager.nameList);
       }
     });
   }
@@ -173,44 +181,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
-  }
-
-  void _AddName(String name) {
-    if (name.isNotEmpty && !_nameList.any((item) => item['name'] == name)) {
-      setState(() {
-        _nameList.add({'name': name, 'count': 0});
-        _filteredNameList = List.from(_nameList);
-      });
-      _saveData();
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Name already added")),
-      );
-    }
-  }
-
-  void _updateCount(int index) {
-    setState(() {
-      _filteredNameList[index]['count'] += 1;
-    });
-    _saveData();
-  }
-
-  void _DownGradeCount(int index) {
-    setState(() {
-      _filteredNameList[index]['count'] -= 1;
-      if (_filteredNameList[index]['count'] < 0) {
-        _filteredNameList[index]['count'] = 0;
-      }
-    });
-    _saveData();
-  }
-
-  void _RestCount(int index) {
-    setState(() {
-      _filteredNameList[index]['count'] = 0;
-    });
-    _saveData();
   }
 
   Future<void> _showDialog() async {
