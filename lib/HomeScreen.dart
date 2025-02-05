@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _nameList = [];
   late SharedPreferences _prefs;
 
-
+void _saveData()async{
+  await  _prefs.setString( 'nameList', jsonEncode(_nameList));
+}
   @override
   void dispose() {
     _nameController.dispose();
