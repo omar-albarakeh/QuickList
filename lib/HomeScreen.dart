@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.orange,
         onPressed: () => _showDialog(),
         child: const Icon(Icons.add, color: Colors.white),
       ),
