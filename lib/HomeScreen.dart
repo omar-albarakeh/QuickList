@@ -179,6 +179,7 @@ void _loadData() async{
   setState(() {
     _nameList[index]['count']=0;
   });
+  _saveData();
   }
   Future<void> _showDialog() async {
     showDialog(
