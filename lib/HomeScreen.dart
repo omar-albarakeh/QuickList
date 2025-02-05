@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +11,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _nameController = TextEditingController();
   List<Map<String, dynamic>> _nameList = [];
+  late SharedPreferences _prefs;
+
 
   @override
   void dispose() {
@@ -40,7 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: _nameList.length,
           itemBuilder: (context, index) {
             return ListTile(
-              leading: Text("${index + 1} ."),
+              leading: CircleAvatar(
+               radius:30,
+                child:
+               Text("${index + 1} ."),
+              ),
               title: Text(" ${_nameList[index]['name']}"),
               subtitle: Text("Count: ${_nameList[index]['count']}"),
               trailing: SizedBox(
@@ -103,7 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-
               ),
             );
           },
