@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: ListTile(
                         leading: CircleAvatar(
+                          radius: 15,
                           backgroundColor: Colors.orangeAccent,
                           child: Text("${index + 1}",
                               style: const TextStyle(color: Colors.white)),
@@ -80,10 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             _buildIconButton(Icons.keyboard_arrow_up,
                                 Colors.green, () => _updateCount(index)),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 5),
                             _buildIconButton(Icons.keyboard_arrow_down,
                                 Colors.red, () => _downGradeCount(index)),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 5),
                             _buildIconButton(Icons.refresh, Colors.blue,
                                 () => _resetCount(index)),
                           ],
@@ -157,8 +158,8 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.orange[50],
-          title: const Text("Add Name"),
+          backgroundColor: Colors.black26,
+          title: const Text("Add Name" ,style: TextStyle(color: Colors.white),),
           content: TextField(
             decoration: const InputDecoration(
               labelText: "Enter User Name",
