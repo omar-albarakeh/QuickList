@@ -29,6 +29,12 @@ void _loadData() async{
   }
 }
   @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  @override
   void dispose() {
     _nameController.dispose();
     super.dispose();
