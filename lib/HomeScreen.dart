@@ -25,7 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text(
           "Quick List",
           style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 32
+          ),
         ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -50,7 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ? const Center(
                   child: Text(
                     "No Names Added",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20
+                    ),
                   ),
                 )
               : ListView.builder(
@@ -158,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.black26,
+          backgroundColor: Colors.black,
           title: const Text("Add Name" ,style: TextStyle(color: Colors.white),),
           content: TextField(
             decoration: const InputDecoration(
