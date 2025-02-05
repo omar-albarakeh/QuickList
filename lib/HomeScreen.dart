@@ -111,7 +111,7 @@ void _loadData() async{
                     ),
                     SizedBox(width: 10,),
                     GestureDetector(
-                      onTap: () => _DownGradeCount(index),
+                      onTap: () => _RestCount(index),
                       child: Container(
                         width: 36,
                         height: 36,
@@ -175,6 +175,11 @@ void _loadData() async{
     _saveData();
   }
 
+  void _RestCount(index){
+  setState(() {
+    _nameList[index]['count']=0;
+  });
+  }
   Future<void> _showDialog() async {
     showDialog(
       context: context,
