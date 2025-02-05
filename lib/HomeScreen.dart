@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _initialize();
+    _datamanager.onUpdate = _updateUI;
     _searchController.addListener(_filterNames);
   }
 
@@ -30,7 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
       _filteredNameList = List.from(_datamanager.nameList);
     });
   }
-
+  void _updateUI() {
+    setState(() {
+      _filteredNameList = List.from(_datamanager.nameList);
+    });
+  }
   @override
   void dispose() {
     _nameController.dispose();
