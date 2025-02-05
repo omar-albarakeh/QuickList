@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _filteredNameList = [];
   bool _isSearching = false;
 
-  final Data _datamanager =Data();
+  final Data _datamanager = Data();
 
 
   @override
@@ -57,6 +57,45 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<void> _showDialog() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.orange[50],
+          title: const Text("Add Name"),
+          content: TextField(
+            decoration: const InputDecoration(
+              labelText: "Enter User Name",
+              labelStyle: TextStyle(color: Colors.orange),
+            ),
+            controller: _nameController,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                _nameController.clear();
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel", style: TextStyle(color: Colors.orange)),
+            ),
+            TextButton(
+              onPressed: () {
+                String name = _nameController.text.trim();
+                if (name.isNotEmpty) {
+                  _datamanager.AddName(name);
+                }
+                _nameController.clear();
+                Navigator.pop(context);
+              },
+              child: const Text("Add", style: TextStyle(color: Colors.orange)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +120,9 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: _toggleSearch,
-            icon: Icon(_isSearching ? Icons.close : Icons.search, color: Colors.white, size: 30),
+            icon: Icon(
+                _isSearching ? Icons.close : Icons.search, color: Colors.white,
+                size: 30),
           ),
         ],
       ),
@@ -116,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     GestureDetector(
-                      onTap: () => _updateCount(index),
+                      onTap: () => _datamanager.AddCounter(index),
                       child: Container(
                         width: 36,
                         height: 36,
@@ -134,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () => _DownGradeCount(index),
+                      onTap: () => _datamanager.SubtractCounter(index),
                       child: Container(
                         width: 36,
                         height: 36,
@@ -152,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () => _RestCount(index),
+                      onTap: () => _datamanager.RestCounter(index),
                       child: Container(
                         width: 36,
                         height: 36,
@@ -183,42 +224,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<void> _showDialog() async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.orange[50],
-          title: const Text("Add Name"),
-          content: TextField(
-            decoration: const InputDecoration(
-              labelText: "Enter User Name",
-              labelStyle: TextStyle(color: Colors.orange),
-            ),
-            controller: _nameController,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                _nameController.clear();
-                Navigator.pop(context);
-              },
-              child: const Text("Cancel", style: TextStyle(color: Colors.orange)),
-            ),
-            TextButton(
-              onPressed: () {
-                String name = _nameController.text.trim();
-                if (name.isNotEmpty) {
-                  _AddName(name);
-                }
-                _nameController.clear();
-                Navigator.pop(context);
-              },
-              child: const Text("Add", style: TextStyle(color: Colors.orange)),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
