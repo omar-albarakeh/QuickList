@@ -141,7 +141,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         )
             : ListView.builder(
-          padding: const EdgeInsets.all(16.0),
           itemCount: _filteredNameList.length,
           itemBuilder: (context, index) {
             return ListTile(
@@ -149,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(fontSize: 20),),
               title: Text(
                 " ${_filteredNameList[index]['name']}",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 15),
               ),
               subtitle: Text(
                 "Count: ${_filteredNameList[index]['count']}",
