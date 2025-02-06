@@ -146,8 +146,9 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (context, index) {
             return ListTile(
               leading: CircleAvatar(
+                backgroundColor: Colors.black,
                 radius: 15,
-                child: Text("${index + 1} "),
+                child: Text("${index + 1} ",style: TextStyle(color: Colors.white,fontSize: 15),),
               ),
               title: Text(
                 " ${_filteredNameList[index]['name']}",
@@ -165,8 +166,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: () => _datamanager.AddCounter(index),
                       child: Container(
-                        width: 36,
-                        height: 36,
+                        width: 25,
+                        height: 25,
                         decoration: BoxDecoration(
                           color: Colors.green,
                           shape: BoxShape.circle,
@@ -175,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: const Icon(
                           Icons.keyboard_double_arrow_up_sharp,
                           color: Colors.white,
-                          size: 30,
+                          size: 20,
                         ),
                       ),
                     ),
@@ -183,8 +184,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: () => _datamanager.SubtractCounter(index,context),
                       child: Container(
-                        width: 36,
-                        height: 36,
+                        width: 25,
+                        height: 25,
                         decoration: BoxDecoration(
                           color: Colors.red,
                           shape: BoxShape.circle,
@@ -193,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: const Icon(
                           Icons.keyboard_double_arrow_down_sharp,
                           color: Colors.white,
-                          size: 30,
+                          size: 20,
                         ),
                       ),
                     ),
@@ -201,8 +202,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: () => _datamanager.RestCounter(index ,context),
                       child: Container(
-                        width: 36,
-                        height: 36,
+                        width: 25,
+                        height: 25,
                         decoration: BoxDecoration(
                           color: Colors.orange,
                           shape: BoxShape.circle,
@@ -211,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: const Icon(
                           Icons.refresh,
                           color: Colors.white,
-                          size: 30,
+                          size: 20,
                         ),
                       ),
                     ),
