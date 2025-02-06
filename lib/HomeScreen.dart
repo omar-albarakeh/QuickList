@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 String name = _nameController.text.trim();
                 if (name.isNotEmpty) {
-                  _datamanager.AddName(name,context);
+                  _datamanager.addName(name,context);
                 }
                 _nameController.clear();
                 Navigator.pop(context);
@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     GestureDetector(
-                      onTap: () => _datamanager.AddCounter(index),
+                      onTap: () => _datamanager.addCounter(index),
                       child: Container(
                         width: 25,
                         height: 25,
@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () => _datamanager.SubtractCounter(index,context),
+                      onTap: () => _datamanager.subtractCounter(index,context),
                       child: Container(
                         width: 25,
                         height: 25,
@@ -196,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () => _datamanager.RestCounter(index ,context),
+                      onTap: () => _datamanager.resetCounter(index ,context),
                       child: Container(
                         width: 25,
                         height: 25,
