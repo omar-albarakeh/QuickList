@@ -70,6 +70,7 @@ class Data {
   }
 
   void RestCounter(int index, BuildContext context) {
+    if(nameList[index]['count'] == 0) return ;
     showDialog(
       context: context,
       builder: (context) {
