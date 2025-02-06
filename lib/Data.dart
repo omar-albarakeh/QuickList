@@ -59,13 +59,11 @@ class Data {
   }
   void SubtractCounter(int index, BuildContext context) {
     if (index >= 0 && index < nameList.length) {
-      nameList[index]['count'] -= 1;
-
-      if (nameList[index]['count'] < 0) {
-        RestCounter(index, context);
-        return;
+      if(nameList[index]['count'] == 0){
+        _showMessage(context, "Counter is already Zero !!", Colors.orange);
+        return ;
       }
-
+      nameList[index]['count'] -= 1;
       Storage.saveData(nameList);
       onUpdate?.call();
     }
