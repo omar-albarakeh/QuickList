@@ -47,10 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
     String query = _searchController.text.toLowerCase();
     setState(() {
       _filteredNameList = _datamanager.nameList
-          .where((item) => item['name'].toLowerCase().contains(query))
+          .where((item) => item['name'].toLowerCase().startsWith(query))
           .toList();
     });
   }
+
 
   void _toggleSearch() {
     setState(() {
@@ -180,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () => _datamanager.SubtractCounter(index),
+                      onTap: () => _datamanager.SubtractCounter(index,context),
                       child: Container(
                         width: 36,
                         height: 36,
@@ -198,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () => _datamanager.RestCounter(index),
+                      onTap: () => _datamanager.RestCounter(index ,context),
                       child: Container(
                         width: 36,
                         height: 36,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class Data {
   List<Map<String, dynamic>> nameList = [];
+
   VoidCallback? onUpdate;
 
   Future<void> initialize() async {
@@ -17,7 +18,10 @@ class Data {
       return;
     }
 
-    bool nameExists = nameList.any((item) => item['name'].toString().toLowerCase() == name.toLowerCase());
+    bool nameExists = nameList.any((item) =>
+    item['name']
+        .toString()
+        .toLowerCase() == name.toLowerCase());
     if (nameExists) {
       _showMessage(context, "This name already exists!", Colors.orange);
       return;
@@ -35,6 +39,7 @@ class Data {
     }
   }
 
+
   void _showMessage(BuildContext context, String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -45,8 +50,6 @@ class Data {
     );
   }
 
-
-
   void AddCounter(int index) {
     if (index >= 0 && index < nameList.length) {
       nameList[index]['count'] += 1;
@@ -54,23 +57,47 @@ class Data {
       onUpdate?.call();
     }
   }
-
-  void SubtractCounter(int index) {
+  void SubtractCounter(int index, BuildContext context) {
     if (index >= 0 && index < nameList.length) {
       nameList[index]['count'] -= 1;
-      if(nameList[index]['count'] < 0){
-        RestCounter(index);
+
+      if (nameList[index]['count'] < 0) {
+        RestCounter(index, context);
+        return;
       }
+
       Storage.saveData(nameList);
       onUpdate?.call();
     }
   }
 
-  void RestCounter(int index) {
-    if (index >= 0 && index < nameList.length) {
-      nameList[index]['count'] = 0;
-      Storage.saveData(nameList);
-      onUpdate?.call();
-    }
+  void RestCounter(int index, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Reset Counter"),
+          content: const Text(
+              "Are you sure you want to reset the counter to 0?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("No", style: TextStyle(color: Colors.red)),
+            ),
+            TextButton(
+              onPressed: () {
+                nameList[index]['count'] = 0;
+                Storage.saveData(nameList);
+                onUpdate?.call();
+                Navigator.pop(context);
+              },
+              child: const Text("Yes", style: TextStyle(color: Colors.green)),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
+
+
