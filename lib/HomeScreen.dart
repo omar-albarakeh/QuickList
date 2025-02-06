@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (context, index) {
             return ListTile(
               leading: Text("${index + 1}- ",
-                style: TextStyle(fontSize: 20),),
+                style: TextStyle(fontSize: 19),),
               title: Text(
                 " ${_filteredNameList[index]['name']}",
                 style: TextStyle(fontSize: 15),
