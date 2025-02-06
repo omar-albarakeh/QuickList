@@ -145,11 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: _filteredNameList.length,
           itemBuilder: (context, index) {
             return ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.black,
-                radius: 15,
-                child: Text("${index + 1} ",style: TextStyle(color: Colors.white,fontSize: 15),),
-              ),
+              leading: Text("${index + 1}- ",
+                style: TextStyle(fontSize: 20),),
               title: Text(
                 " ${_filteredNameList[index]['name']}",
                 style: TextStyle(fontSize: 20),
@@ -159,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(fontSize: 15),
               ),
               trailing: SizedBox(
-                width: 130,
+                width: 100,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
