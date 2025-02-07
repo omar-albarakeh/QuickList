@@ -72,22 +72,26 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.orange[50],
           title: const Text("Add Name"),
           content: TextField(
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: "Enter User Name",
               labelStyle: TextStyle(color: Colors.orange),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange, width: 2.0),
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
             controller: _nameController,
           ),
+
           actions: [
             TextButton(
               onPressed: () {
                 _nameController.clear();
                 Navigator.pop(context);
               },
-              child: const Text("Cancel", style: TextStyle(color: Colors.orange)),
+              child: const Text("Cancel", style: TextStyle(color: Colors.red)),
             ),
             TextButton(
               onPressed: () {
@@ -98,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _nameController.clear();
                 Navigator.pop(context);
               },
-              child: const Text("Add", style: TextStyle(color: Colors.orange)),
+              child: const Text("Add", style: TextStyle(color: Colors.green)),
             ),
           ],
         );
