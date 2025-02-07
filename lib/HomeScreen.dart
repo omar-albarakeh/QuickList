@@ -171,11 +171,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icons.keyboard_double_arrow_up_sharp,
                       color: Colors.green,
                     ),
+                    SizedBox(width: 10,),
                     _counterButton(
                       onTap: () => _datamanager.decrementCounter(index, context),
                       icon: Icons.keyboard_double_arrow_down_sharp,
                       color: Colors.red,
                     ),
+                    SizedBox(width: 10,),
                     _counterButton(
                       onTap: () => _datamanager.resetCounter(index, context),
                       icon: Icons.refresh,
