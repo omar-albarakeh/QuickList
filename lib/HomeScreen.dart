@@ -16,7 +16,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final Data _datamanager = Data();
 
-
   @override
   void initState() {
     super.initState();
@@ -26,16 +25,22 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _initialize() async {
-    await _datamanager.initialize();
-    setState(() {
-      _filteredNameList = List.from(_datamanager.nameList);
-    });
+     _datamanager.initialize();
+    if (mounted) {
+      setState(() {
+        _filteredNameList = List.from(_datamanager.nameList);
+      });
+    }
   }
+
   void _updateUI() {
-    setState(() {
-      _filteredNameList = List.from(_datamanager.nameList);
-    });
+    if (mounted) {
+      setState(() {
+        _filteredNameList = List.from(_datamanager.nameList);
+      });
+    }
   }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -51,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
           .toList();
     });
   }
-
 
   void _toggleSearch() {
     setState(() {
@@ -89,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 String name = _nameController.text.trim();
                 if (name.isNotEmpty) {
-                  _datamanager.addName(name,context);
+                  _datamanager.addName(name, context);
                 }
                 _nameController.clear();
                 Navigator.pop(context);
@@ -110,12 +114,12 @@ class _HomeScreenState extends State<HomeScreen> {
         title: _isSearching
             ? TextField(
           controller: _searchController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: "Search...",
             border: InputBorder.none,
             hintStyle: TextStyle(color: Colors.white70),
           ),
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         )
             : const Text(
           "Quick List",
@@ -127,14 +131,13 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             onPressed: _toggleSearch,
             icon: Icon(
-                _isSearching ? Icons.close : Icons.search, color: Colors.white,
-                size: 30),
+                _isSearching ? Icons.close : Icons.search, color: Colors.white, size: 30),
           ),
         ],
       ),
       body: SafeArea(
         child: _filteredNameList.isEmpty
-            ? Center(
+            ? const Center(
           child: Text(
             "No Names Added",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -145,72 +148,34 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (context, index) {
             return ListTile(
               leading: Text("${index + 1}- ",
-                style: TextStyle(fontSize: 19),),
+                  style: const TextStyle(fontSize: 19)),
               title: Text(
-                " ${_filteredNameList[index]['name']}",
-                style: TextStyle(fontSize: 15),
+                " ${_filteredNameList[index]["name"]}",
+                style: const TextStyle(fontSize: 15),
               ),
               subtitle: Text(
-                "Count: ${_filteredNameList[index]['count']}",
-                style: TextStyle(fontSize: 15),
+                "Count: ${_filteredNameList[index]["count"]}",
+                style: const TextStyle(fontSize: 15),
               ),
               trailing: SizedBox(
                 width: 100,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    GestureDetector(
-                      onTap: () => _datamanager.addCounter(index),
-                      child: Container(
-                        width: 25,
-                        height: 25,
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          shape: BoxShape.circle,
-                        ),
-                        alignment: Alignment.center,
-                        child: const Icon(
-                          Icons.keyboard_double_arrow_up_sharp,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
+                    _counterButton(
+                      onTap: () => _datamanager.incrementCounter(index),
+                      icon: Icons.keyboard_double_arrow_up_sharp,
+                      color: Colors.green,
                     ),
-                    SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () => _datamanager.subtractCounter(index,context),
-                      child: Container(
-                        width: 25,
-                        height: 25,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                        ),
-                        alignment: Alignment.center,
-                        child: const Icon(
-                          Icons.keyboard_double_arrow_down_sharp,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
+                    _counterButton(
+                      onTap: () => _datamanager.decrementCounter(index, context),
+                      icon: Icons.keyboard_double_arrow_down_sharp,
+                      color: Colors.red,
                     ),
-                    SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () => _datamanager.resetCounter(index ,context),
-                      child: Container(
-                        width: 25,
-                        height: 25,
-                        decoration: BoxDecoration(
-                          color: Colors.orange,
-                          shape: BoxShape.circle,
-                        ),
-                        alignment: Alignment.center,
-                        child: const Icon(
-                          Icons.refresh,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
+                    _counterButton(
+                      onTap: () => _datamanager.resetCounter(index, context),
+                      icon: Icons.refresh,
+                      color: Colors.orange,
                     ),
                   ],
                 ),
@@ -221,10 +186,25 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
-        onPressed: () => _showDialog(),
+        onPressed: _showDialog,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
 
+  Widget _counterButton({required VoidCallback onTap, required IconData icon, required Color color}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 25,
+        height: 25,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+        ),
+        alignment: Alignment.center,
+        child: Icon(icon, color: Colors.white, size: 20),
+      ),
+    );
+  }
 }
