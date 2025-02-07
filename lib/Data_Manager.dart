@@ -12,7 +12,8 @@ class Data {
 
   void _listenToDataChanges() {
     _firestore.collection('Users').snapshots().listen((snapshot) {
-      nameList = snapshot.docs.map((doc) => {
+      nameList = snapshot.docs.map((doc) =>
+      {
         'id': doc.id,
         'name': doc['name'],
         'count': doc['count'] ?? 0,
@@ -28,7 +29,8 @@ class Data {
       return;
     }
 
-    if (nameList.any((item) => item['name'].toString().toLowerCase() == name.toLowerCase())) {
+    if (nameList.any((item) =>
+    item['name'].toString().toLowerCase() == name.toLowerCase())) {
       _showMessage(context, "This name already exists!", Colors.orange);
       return;
     }
@@ -42,7 +44,8 @@ class Data {
     await _firestore.collection('Users').doc(docId).update({"count": newCount});
   }
 
-  void incrementCounter(int index) => updateCounter(nameList[index]['id'], nameList[index]['count'] + 1);
+  void incrementCounter(int index) =>
+      updateCounter(nameList[index]['id'], nameList[index]['count'] + 1);
 
   void decrementCounter(int index, BuildContext context) {
     if (nameList[index]['count'] == 0) {
@@ -87,5 +90,15 @@ class Data {
         duration: const Duration(seconds: 3),
       ),
     );
+  }
+
+  Future<void> removeName(int index, BuildContext context) async {
+    try {
+      String docId = nameList[index]['id'];
+      await _firestore.collection('Users').doc(docId).delete();
+      _showMessage(context, "Name deleted successfully!", Colors.red);
+    } catch (e) {
+      _showMessage(context, "Failed to delete name!", Colors.red);
+    }
   }
 }

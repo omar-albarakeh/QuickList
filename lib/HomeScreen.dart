@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quicklist/Data.dart';
+import 'package:quicklist/Data_Manager.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _initialize() async {
-     _datamanager.initialize();
+    _datamanager.initialize();
     if (mounted) {
       setState(() {
         _filteredNameList = List.from(_datamanager.nameList);
@@ -76,15 +76,14 @@ class _HomeScreenState extends State<HomeScreen> {
           content: TextField(
             decoration: InputDecoration(
               labelText: "Enter User Name",
-              labelStyle: TextStyle(color: Colors.orange),
+              labelStyle: const TextStyle(color: Colors.orange),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.orange, width: 2.0),
+                borderSide: const BorderSide(color: Colors.orange, width: 2.0),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
             controller: _nameController,
           ),
-
           actions: [
             TextButton(
               onPressed: () {
@@ -150,41 +149,26 @@ class _HomeScreenState extends State<HomeScreen> {
             : ListView.builder(
           itemCount: _filteredNameList.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              leading: Text("${index + 1}- ",
-                  style: const TextStyle(fontSize: 19)),
-              title: Text(
-                " ${_filteredNameList[index]["name"]}",
-                style: const TextStyle(fontSize: 15),
-              ),
-              subtitle: Text(
-                "Count: ${_filteredNameList[index]["count"]}",
-                style: const TextStyle(fontSize: 15),
-              ),
-              trailing: SizedBox(
-                width: 100,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _counterButton(
-                      onTap: () => _datamanager.incrementCounter(index),
-                      icon: Icons.keyboard_double_arrow_up_sharp,
-                      color: Colors.green,
-                    ),
-                    SizedBox(width: 10,),
-                    _counterButton(
-                      onTap: () => _datamanager.decrementCounter(index, context),
-                      icon: Icons.keyboard_double_arrow_down_sharp,
-                      color: Colors.red,
-                    ),
-                    SizedBox(width: 10,),
-                    _counterButton(
-                      onTap: () => _datamanager.resetCounter(index, context),
-                      icon: Icons.refresh,
-                      color: Colors.orange,
-                    ),
-                  ],
-                ),
+            final nameItem = _filteredNameList[index];
+            return Dismissible(
+              key: Key(nameItem["name"]),
+              direction: DismissDirection.horizontal,
+              background: _buildDismissibleBackground(Alignment.centerLeft),
+              secondaryBackground: _buildDismissibleBackground(Alignment.centerRight),
+              onDismissed: (direction) {
+                setState(() {
+                  _datamanager.removeName(index,context);
+                  _filteredNameList.removeAt(index);
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("${nameItem["name"]} deleted")),
+                );
+              },
+              child: ListTile(
+                leading: Text("${index + 1}- ", style: const TextStyle(fontSize: 19)),
+                title: Text(" ${nameItem["name"]}", style: const TextStyle(fontSize: 15)),
+                subtitle: Text("Count: ${nameItem["count"]}", style: const TextStyle(fontSize: 15)),
+                trailing: _buildCounterButtons(index),
               ),
             );
           },
@@ -198,16 +182,38 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _counterButton({required VoidCallback onTap, required IconData icon, required Color color}) {
+  Widget _buildDismissibleBackground(Alignment alignment) {
+    return Container(
+      color: Colors.red,
+      alignment: alignment,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: const Icon(Icons.delete, color: Colors.white),
+    );
+  }
+
+  Widget _buildCounterButtons(int index) {
+    return SizedBox(
+      width: 100,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _counterButton(() => _datamanager.incrementCounter(index), Icons.keyboard_double_arrow_up_sharp, Colors.green),
+          SizedBox(width: 10,),
+          _counterButton(() => _datamanager.decrementCounter(index, context), Icons.keyboard_double_arrow_down_sharp, Colors.red),
+          SizedBox(width: 10,),
+          _counterButton(() => _datamanager.resetCounter(index, context), Icons.refresh, Colors.orange),
+        ],
+      ),
+    );
+  }
+
+  Widget _counterButton(VoidCallback onTap, IconData icon, Color color) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: 25,
         height: 25,
-        decoration: BoxDecoration(
-          color: color,
-          shape: BoxShape.circle,
-        ),
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         alignment: Alignment.center,
         child: Icon(icon, color: Colors.white, size: 20),
       ),
