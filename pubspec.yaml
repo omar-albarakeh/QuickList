@@ -68,8 +68,6 @@ flutter:
   uses-material-design: true
 
   assets:
-     - assets/client_secret_125611542190-7dnem0s109m87tipi2dm7d9jdbt9lmif.apps.googleusercontent.com (1).json
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
