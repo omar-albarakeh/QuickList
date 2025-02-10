@@ -198,9 +198,9 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           _counterButton(() => _datamanager.incrementCounter(index), Icons.keyboard_double_arrow_up_sharp, Colors.green),
-          SizedBox(width: 10,),
+          const SizedBox(width: 10,),
           _counterButton(() => _datamanager.decrementCounter(index, context), Icons.keyboard_double_arrow_down_sharp, Colors.red),
-          SizedBox(width: 10,),
+          const SizedBox(width: 10,),
           _counterButton(() => _datamanager.resetCounter(index, context), Icons.refresh, Colors.orange),
         ],
       ),
